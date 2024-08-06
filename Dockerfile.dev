@@ -1,0 +1,21 @@
+# Add base image
+FROM node:16-alpine
+
+# Setup user
+USER node
+
+# Setup working direcctory
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+# Copy the dependencies
+COPY --chown=node:node package.json .
+
+# Install the dependencies
+RUN npm install
+
+# Copy app file
+COPY --chown=node:node ./ ./
+
+# Run the app
+CMD ["npm", "start"]
